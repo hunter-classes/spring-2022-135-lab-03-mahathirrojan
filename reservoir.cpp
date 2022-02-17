@@ -81,7 +81,7 @@ double get_max_east(){
 }
 
 std::string compare_basins(std::string date){
-    std::ifstream fin("Current_Reservoir_Levels.txt");
+    std::ifstream fin("Current_Reservoir_Levels.tsv");
     if(fin.fail()){
         std::cerr << "File cannot be opened for reading." << std::endl; 
         exit(1); 
@@ -94,12 +94,12 @@ std::string compare_basins(std::string date){
     while(fin >> date_tsv >> eastSt >> eastEl >> westSt >> westEl){
         fin.ignore(INT_MAX, '\n');
 
-        if(date_tsv.compare(date) == 0){
+        if(date_tsv == date){
             fin.close(); 
-            if(std::stod(eastSt) > std::stod(westSt)){
+            if(std::stod(eastEl) > std::stod(westEl)){
                 return "West"; 
             }
-            else if(std::stod(eastSt) > std::stod(westSt)){
+            else if(std::stod(eastEl) < std::stod(westEl)){
                 return "East"; 
             }
             else{
